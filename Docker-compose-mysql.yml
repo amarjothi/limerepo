@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  lime:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    image: lime:latest
+    ports:
+      - '127.0.0.1:8000:8000'
+    hostname: surveyanalyst
+    volumes:
+      - ./src/limesurvey:/var/www/limesurvey
+    environment:
+      - APP_KEY=SomeRandomStringToAddSecurity123
+      - APP_ENV=development
+      - APP_DEBUG=true
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+      - PORT=8000
+    links:
+      - db
+    depends_on:
+      - db
+
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile-mysql
+    image: limedb:latest
+    volumes:
+      - ./sqlconfig/my.cnf:/etc/my.cnf 
+      - ./sqldata/:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: limesurvey 
+    hostname: db  
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

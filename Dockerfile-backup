@@ -1,0 +1,42 @@
+FROM php:7.2-apache AS Builder
+
+#RUN  pecl install xdebug-2.8.1 \
+ #   && docker-php-ext-enable xdebug
+
+RUN apt-get update && \
+   apt-get install  -y vim git unzip socat yum yum-utils
+#RUN yum repolist all
+#RUN yum-config-manager \
+ #   --add-repo \
+#    https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+#RUN yum-config-manager --enable https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+
+# Use the default production configuration
+#RUN yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+#RUN yum-config-manager --enable http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+#RUN yum install php72w php72w-cli php72w-fpm php72w-common php72w-mbstring php72w-xml php72w-mysql php72w-gd php72w-zip php72w-ldap php72w-imap
+
+#RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+FROM Builder as Builder1
+COPY  ./php.ini "$PHP_INI_DIR/php.ini"
+ENV APACHE_DOCUMENT_ROOT /var/www/limesurvey/
+
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+
+COPY default.conf /etc/apache2/sites-available/000-default.conf
+COPY start-apache /usr/local/bin
+
+RUN chmod 760 /usr/local/bin/start-apache
+RUN a2enmod rewrite
+
+RUN mkdir -p /var/www/limesurvey
+COPY src/limesurvey/ /var/www/limesurvey/
+RUN chown -R www-data:www-data  /var/www/limesurvey
+
+#ENV APACHE_RUN_USER www-data
+#ENV APACHE_RUN_GROUP www-data
+#ENV APACHE_LOG_DIR /var/log/apache2
+
+CMD ["start-apache"]

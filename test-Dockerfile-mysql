@@ -1,0 +1,34 @@
+FROM mysql:latest
+
+# Add a database
+#RUN export MYSQL_DATABASE=limesurvey
+#RUN export MYSQL_ROOT_PASSWORD=l1m3surv3y
+ #   MYSQL_RANDOM_ROOT_PASSWORD=true \
+ENV   MYSQL_DATABASE limesurvey 
+ENV   MYSQL_USER limesurvey 
+ENV   MYSQL_PASSWORD limesurvey 
+ENV   MYSQL_ROOT_PASSWORD limesurvey 
+
+ENV   MYSQL_RUN_DIR /run/mysqld 
+ENV   MYSQL_LOG_DIR /var/log/mysql
+
+# Add the content of the sql-scripts/ directory to your image
+# All scripts in docker-entrypoint-initdb.d/ are automatically
+# executed during container startup
+COPY ./sqlscripts/init.sql /docker-entrypoint-initdb.d/init.sql
+
+# Create Database
+#RUN	mkdir /usr/sql
+#RUN	chmod 644 /usr/sql
+
+#COPY ./sqlscripts/init.sql  /usr/sql/init.sql
+
+#RUN /usr/bin/mysql start && \
+#        mysql -h 127.0.0.1 -P 3306 --protocol=tcp -u root -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE limesurvey" && \
+ #   	mysql -h 127.0.0.1 -P 3306 --protocol=tcp -u root -p${MYSQL_ROOT_PASSWORD} -D lba < /usr/sql/init.sql 
+ #   	rm -rd /usr/sql 
+ENV   MYSQL_DATA_DIR /var/lib/mysql 
+RUN printenv
+#PORT
+EXPOSE 3306 33060 33061
+CMD ["mysqld"]

@@ -1,0 +1,280 @@
+{
+    "ipcMode": null,
+    "executionRoleArn": null,
+    "containerDefinitions": [
+      {
+        "dnsSearchDomains": null,
+        "environmentFiles": null,
+        "logConfiguration": {
+          "logDriver": "awslogs",
+          "secretOptions": null,
+          "options": {
+            "awslogs-group": "/ecs/pollster-task",
+            "awslogs-region": "eu-west-2",
+            "awslogs-stream-prefix": "ecs"
+          }
+        },
+        "entryPoint": null,
+        "portMappings": [
+          {
+            "hostPort": 0,
+            "protocol": "tcp",
+            "containerPort": 8000
+          }
+        ],
+        "command": null,
+        "linuxParameters": null,
+        "cpu": 0,
+        "environment": [
+          {
+            "name": "APACHE_DOCUMENT_ROOT",
+            "value": "/var/www/limesurvey/"
+          },
+          {
+            "name": "APACHE_ENVVARS",
+            "value": "/etc/apache2/envvars"
+          },
+          {
+            "name": "APACHE_LOCK_DIR",
+            "value": "/var/lock/apache2"
+          },
+          {
+            "name": "APACHE_LOG_DIR",
+            "value": "/var/log/apache2"
+          },
+          {
+            "name": "APACHE_PID_FILE",
+            "value": "/var/run/apache2.pid"
+          },
+          {
+            "name": "APACHE_RUN_DIR",
+            "value": "/var/run/apache2"
+          },
+          {
+            "name": "APACHE_RUN_GROUP",
+            "value": "www-data"
+          },
+          {
+            "name": "APACHE_RUN_USER",
+            "value": "www-data"
+          },
+          {
+            "name": "PORT",
+            "value": "8000"
+          },
+          {
+            "name": "USER",
+            "value": "www-data"
+          }
+        ],
+        "resourceRequirements": null,
+        "ulimits": null,
+        "dnsServers": null,
+        "mountPoints": [
+          {
+            "readOnly": null,
+            "containerPath": "/var/www/limesurvey",
+            "sourceVolume": "varwwwlimesurvey"
+          },
+          {
+            "readOnly": null,
+            "containerPath": "/var/log/apache2",
+            "sourceVolume": "varlogapache2"
+          },
+          {
+            "readOnly": null,
+            "containerPath": "/var/run/apache2",
+            "sourceVolume": "varrunapache2"
+          },
+          {
+            "readOnly": null,
+            "containerPath": "/etc/apache2",
+            "sourceVolume": "etcapache2"
+          },
+          {
+            "readOnly": null,
+            "containerPath": "/var/run/docker.sock",
+            "sourceVolume": "varrunsock"
+          },
+          {
+            "readOnly": null,
+            "containerPath": "/var/lock/apache2",
+            "sourceVolume": "varlockapache2"
+          }
+        ],
+        "workingDirectory": "/var/www/limesurvey",
+        "secrets": null,
+        "dockerSecurityOptions": null,
+        "memory": 600,
+        "memoryReservation": 300,
+        "volumesFrom": [],
+        "stopTimeout": 360,
+        "image": "702193001748.dkr.ecr.eu-west-2.amazonaws.com/pollster:latest",
+        "startTimeout": 180,
+        "firelensConfiguration": null,
+        "dependsOn": null,
+        "disableNetworking": null,
+        "interactive": null,
+        "healthCheck": null,
+        "essential": true,
+        "links": null,
+        "hostname": "thepollster",
+        "extraHosts": null,
+        "pseudoTerminal": null,
+        "user": "www-data",
+        "readonlyRootFilesystem": null,
+        "dockerLabels": null,
+        "systemControls": null,
+        "privileged": true,
+        "name": "pollster"
+      }
+    ],
+    "placementConstraints": [],
+    "memory": "4096",
+    "taskRoleArn": null,
+    "compatibilities": [
+      "EC2"
+    ],
+    "taskDefinitionArn": "arn:aws:ecs:eu-west-2:702193001748:task-definition/pollster-task:31",
+    "family": "pollster-task",
+    "requiresAttributes": [
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.ecr-auth"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.privileged-container"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "ecs.capability.docker-plugin.local"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "ecs.capability.container-ordering"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.docker-remote-api.1.25"
+      }
+    ],
+    "pidMode": null,
+    "requiresCompatibilities": [
+      "EC2"
+    ],
+    "networkMode": null,
+    "cpu": "1024",
+    "revision": 31,
+    "status": "ACTIVE",
+    "inferenceAccelerators": null,
+    "proxyConfiguration": null,
+    "volumes": [
+      {
+        "fsxWindowsFileServerVolumeConfiguration": null,
+        "efsVolumeConfiguration": null,
+        "name": "varwwwlimesurvey",
+        "host": null,
+        "dockerVolumeConfiguration": {
+          "autoprovision": true,
+          "labels": {
+            "name": "limesurvey"
+          },
+          "scope": "shared",
+          "driver": "local",
+          "driverOpts": null
+        }
+      },
+      {
+        "fsxWindowsFileServerVolumeConfiguration": null,
+        "efsVolumeConfiguration": null,
+        "name": "varlogapache2",
+        "host": null,
+        "dockerVolumeConfiguration": {
+          "autoprovision": true,
+          "labels": null,
+          "scope": "shared",
+          "driver": "local",
+          "driverOpts": null
+        }
+      },
+      {
+        "fsxWindowsFileServerVolumeConfiguration": null,
+        "efsVolumeConfiguration": null,
+        "name": "varrunapache2",
+        "host": {
+          "sourcePath": "/var/run/apache2"
+        },
+        "dockerVolumeConfiguration": null
+      },
+      {
+        "fsxWindowsFileServerVolumeConfiguration": null,
+        "efsVolumeConfiguration": null,
+        "name": "etcapache2",
+        "host": null,
+        "dockerVolumeConfiguration": {
+          "autoprovision": true,
+          "labels": null,
+          "scope": "shared",
+          "driver": "local",
+          "driverOpts": null
+        }
+      },
+      {
+        "fsxWindowsFileServerVolumeConfiguration": null,
+        "efsVolumeConfiguration": null,
+        "name": "varrunsock",
+        "host": {
+          "sourcePath": "/var/run/docker.sock"
+        },
+        "dockerVolumeConfiguration": null
+      },
+      {
+        "fsxWindowsFileServerVolumeConfiguration": null,
+        "efsVolumeConfiguration": null,
+        "name": "varlockapache2",
+        "host": null,
+        "dockerVolumeConfiguration": {
+          "autoprovision": true,
+          "labels": null,
+          "scope": "shared",
+          "driver": "local",
+          "driverOpts": null
+        }
+      }
+    ]
+  }

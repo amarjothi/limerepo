@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#apache2ctl -t -S -D DUMP_INCLUDES -e debug> test.out
+#cat test.out
+
+apachectl -S -D FOREGROUND -e debug
+

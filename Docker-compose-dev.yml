@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  lime:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    image: lime:latest
+    ports:
+      - '127.0.0.1:8000:8000'
+    hostname: thepollster
+    volumes:
+      - ./src/limesurvey:/var/www/limesurvey
+    environment:
+      - APP_KEY=SomeRandomStringToAddSecurity123
+      - APP_ENV=development
+      - APP_DEBUG=true
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+      - PORT=8000

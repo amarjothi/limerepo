@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  lime:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    image: limeweb:latest
+    ports:
+      - '127.0.0.1:8000:8000'
+    volumes:
+      - ./src/limesurvey:/var/www/limesurvey
+    environment:
+      - APP_KEY=l1m3surv3y
+      - APP_ENV=production
+      - APP_DEBUG=true
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+      - PORT=8000
